@@ -57,7 +57,7 @@ Identity pool会自动创建两个role，一种为unauthorized，即未登录仅
 
 在本文当中，我们主要实现的功能为登录用户可以并且只能访问到隶属于自己的设备，未登录用户仅能网页浏览并且有登录选项。 因此，对于授权用户我们赋予对用户自己的id下的设备有着“iot:Connect”, “iot:Publish”, “iot:Subscribe”, “iot:Receive”, “iot:GetThingShadow”的允许权限，以及访问dynamoDB，和修改dynamoDB的权限。${cognito-identity.amazonaws.com:sub}为从cognito-user-pool传递过来的变量，标记用户的identityID。每个user不同且唯一。我们通过此值来限定不同user之间的访问权限。
 
-* 对于authorized users.  请下载[IAM policy](https://github.com/lab798/cognito-with-iot-core/blob/master/policy-rules/cognito-auth-policy.json)并且替换以下参数：
+* 对于authorized users.  请下载[IAM policy](https://github.com/nwcdlabs/iot-mobile-control-using-cognito/blob/master/policy-rules/cognito-auth-policy.json)并且替换以下参数：
   - 请将<Your-AWS-Account-ID>替换为自己的12位ID（去掉<>两个尖括号）
   - 请将<region-code>去掉尖括号替换为自己使用的区域（去掉<>两个尖括号），如日本为ap-northeast-1，virginia为us-east-1,如使用其他region，请务必替换为自己的对应代码，其他region-code请参考[此页](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html). 本文使用日本区域ap-northeast-1做演示。 resource完整示例为arn:aws:iot:us-west-1:123456789102:client/${cognito-identity.amazonaws.com:sub}。
 
@@ -82,7 +82,7 @@ Identity pool会自动创建两个role，一种为unauthorized，即未登录仅
 ```
 
 #### 5. 在Iot中添加Iot policy：为Iot授予访问权限
-在Iot core当中安全--策略(policy)页面，添加策略，命名cognito-identity-general-policy，具体权限如下。Cognito将通过attachPolicy命令为自己授予这条policy，使得每个Auth user有权限访问Iot且仅能发消息给自己的设备。此段policy也可以在[这里](https://github.com/lab798/cognito-with-iot-core/blob/master/policy-rules/iot-policy.json)找到
+在Iot core当中安全--策略(policy)页面，添加策略，命名cognito-identity-general-policy，具体权限如下。Cognito将通过attachPolicy命令为自己授予这条policy，使得每个Auth user有权限访问Iot且仅能发消息给自己的设备。此段policy也可以在[这里](https://github.com/nwcdlabs/iot-mobile-control-using-cognito/blob/master/policy-rules/iot-policy.json)找到
 
 ```
 {
@@ -119,7 +119,7 @@ Identity pool会自动创建两个role，一种为unauthorized，即未登录仅
 
 三是消息收发。点击已有设备，即模拟一次消息传输的过程。页面还有一个button是验证发送到其他topic会出现什么情况。
 
-[>>>>>完整代码请点击这里<<<<<](https://github.com/lab798/cognito-with-iot-core)下载。
+[>>>>>完整代码请点击这里<<<<<](hhttps://github.com/nwcdlabs/iot-mobile-control-using-cognito)下载。
 
 1. (可选步骤，已经附此最终文件bundle.js)JS引入AWSIotDeviceSdk浏览器版本
 
@@ -137,7 +137,7 @@ terminal> browserify path/to/AWSIotDeviceSdk.js -o bundle.js
 
 2. 修改前端代码, 替换参数 
     
-在[index.html](https://github.com/lab798/cognito-with-iot-core/blob/master/index.html)中修改以下内容：   
+在[index.html](https://github.com/nwcdlabs/iot-mobile-control-using-cognito/blob/master/index.html)中修改以下内容：   
 
 (1) 在function initCognitoSDK() 中替换所有的<your-region-code>，<your-app-client-id>，<your-custom-domain>,<identity-provider-id>,<your-user-pool-id>为自己的值，这一步是设置cognito的过程。
 
